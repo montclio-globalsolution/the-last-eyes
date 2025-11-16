@@ -72,7 +72,7 @@ export default function Login() {
                 )}
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => navigation.navigate("Cadastro")}>
+            <TouchableOpacity onPress={() => navigation.navigate("Register")}>
                 <Text style={styles.link}>
                     Não tem conta? <Text style={styles.linkBold}>Cadastre-se</Text>
                 </Text>
