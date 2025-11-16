@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
     title: {
         fontSize: 26,
         fontWeight: "bold",
-        color: "#1E4FFF",
+        color: "#1A73E8",
         marginBottom: 24,
     },
 
@@ -37,7 +37,7 @@ export const styles = StyleSheet.create({
     button: {
         width: "100%",
         height: 52,
-        backgroundColor: "#1E4FFF",
+        backgroundColor: "#1A73E8",
         borderRadius: 12,
         alignItems: "center",
         justifyContent: "center",
@@ -57,7 +57,7 @@ export const styles = StyleSheet.create({
     },
 
     linkBold: {
-        color: "#1E4FFF",
+        color: "#1A73E8",
         fontWeight: "bold",
     },
 });
