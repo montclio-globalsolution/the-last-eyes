@@ -111,6 +111,7 @@ export default function Register() {
                     <Picker.Item label="Operações" value="operacoes" />
                     <Picker.Item label="TI" value="ti" />
                 </Picker>
+
             </View>
 
             <TouchableOpacity
