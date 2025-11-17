@@ -20,12 +20,11 @@ export default function Register() {
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
-    const [perfil, setPerfil] = useState("");
     const [setor, setSetor] = useState("");
     const [loading, setLoading] = useState(false);
 
     const handleRegister = async () => {
-        if (!nome || !email || !senha || !perfil || !setor) {
+        if (!nome || !email || !senha || !setor) {
             Alert.alert("Atenção", "Preencha todos os campos antes de cadastrar!");
             return;
         }
@@ -38,7 +37,6 @@ export default function Register() {
                 nome,
                 email,
                 senha,
-                perfil,
                 setor,
             });
 
@@ -96,24 +94,6 @@ export default function Register() {
                 onChangeText={setSenha}
             />
 
-            <Text style={styles.label}>Perfil</Text>
-            <View style={styles.pickerContainer}>
-                <Picker
-                    selectedValue={perfil}
-                    onValueChange={(itemValue) => setPerfil(itemValue)}
-                >
-                    <Picker.Item
-                        label="Selecione um perfil..."
-                        value=""
-                        enabled={false}
-                        color="#999"
-                    />
-                    <Picker.Item label="Administrador" value="admin" />
-                    <Picker.Item label="Gestor" value="gestor" />
-                    <Picker.Item label="Colaborador" value="colaborador" />
-                </Picker>
-            </View>
-
             <Text style={styles.label}>Setor</Text>
             <View style={styles.pickerContainer}>
                 <Picker
@@ -131,6 +111,7 @@ export default function Register() {
                     <Picker.Item label="Operações" value="operacoes" />
                     <Picker.Item label="TI" value="ti" />
                 </Picker>
+
             </View>
 
             <TouchableOpacity
