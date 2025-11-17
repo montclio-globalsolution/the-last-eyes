@@ -1,6 +1,11 @@
-import 'react-native-gesture-handler';
-import AppRoutes from './src/screens/navigation/AppRoutes';
+import "react-native-gesture-handler";
+import AppRoutes from "./src/screens/navigation/AppRoutes";
+import { AuthProvider } from "./src/contexts/AuthContext";
 
 export default function App() {
-  return <AppRoutes />;
+  return (
+    <AuthProvider>
+      <AppRoutes />
+    </AuthProvider>
+  );
 }
