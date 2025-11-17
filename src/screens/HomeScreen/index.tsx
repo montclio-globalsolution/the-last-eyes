@@ -15,7 +15,7 @@ import RecomendacoesCard from "../../components/Cards";
 
 const Colors = {
     primaryBlue: "#3B82F6",
-    darkBlue: "#102A43",      // Azul mais profundo e elegante
+    darkBlue: "#102A43",
     lightBlue: "#DBEAFE",
     white: "#FFFFFF",
     grayText: "#6B7280",
@@ -66,13 +66,10 @@ export default function HomeScreen() {
                 { backgroundColor: currentBackgroundColor },
             ]}
         >
-            <StatusBar
-                barStyle="light-content"
-                backgroundColor={Colors.darkBlue}
-            />
+            <StatusBar barStyle="dark-content" />
 
             <ScrollView contentContainerStyle={styles.scrollContent}>
-                {/* HERO SECTION ATUALIZADA */}
+                {/* HERO SECTION SEM FUNDO AZUL */}
                 <View style={styles.heroSection}>
                     <Text style={styles.heroGreeting}>Olá, Pedro 👋</Text>
                     <Text style={styles.heroQuestion}>
@@ -115,7 +112,7 @@ export default function HomeScreen() {
 
                 {/* CARD AJUSTAR HUMOR */}
                 <View style={styles.card}>
-                    <Text style={styles.cardTitleDark}>
+                    <Text style={styles.cardTitle}>
                         Ajustar Humor
                     </Text>
 
@@ -140,7 +137,7 @@ export default function HomeScreen() {
 
                 {/* CARD INSIGHTS */}
                 <View style={styles.card}>
-                    <Text style={styles.cardTitleDark}>Insights da IA</Text>
+                    <Text style={styles.cardTitle}>Insights da IA</Text>
 
                     <View style={styles.insightItem}>
                         <Feather
@@ -196,22 +193,21 @@ const styles = StyleSheet.create({
     heroSection: {
         alignItems: "center",
         justifyContent: "center",
-        paddingVertical: 40,
-        backgroundColor: Colors.darkBlue,
+        paddingVertical: 35,
         borderRadius: 18,
         padding: 30,
         marginBottom: 25,
     },
     heroGreeting: {
-        fontSize: 28,
+        fontSize: 26,
         fontWeight: "800",
-        color: Colors.white,
+        color: Colors.darkBlue,
         marginBottom: 8,
     },
     heroQuestion: {
-        fontSize: 17,
+        fontSize: 16,
         fontWeight: "500",
-        color: "#E2E8F0",
+        color: Colors.grayText,
         marginBottom: 15,
     },
     heroMoodBadge: {
@@ -275,7 +271,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: Colors.borderColor,
     },
-    cardTitleDark: {
+    cardTitle: {
         fontSize: 18,
         fontWeight: "700",
         color: Colors.darkBlue,
