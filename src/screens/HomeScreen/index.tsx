@@ -1,3 +1,4 @@
+// --- INÍCIO DO CÓDIGO ATUALIZADO ---
 import React, { useState, useMemo } from "react";
 import {
     View,
@@ -14,7 +15,7 @@ import RecomendacoesCard from "../../components/Cards";
 
 const Colors = {
     primaryBlue: "#3B82F6",
-    darkBlue: "#1A498D",
+    darkBlue: "#102A43",      // Azul mais profundo e elegante
     lightBlue: "#DBEAFE",
     white: "#FFFFFF",
     grayText: "#6B7280",
@@ -55,37 +56,69 @@ export default function HomeScreen() {
         return humorOptions.find((h) => h.value === humor);
     }, [humor]);
 
-    const currentBackgroundColor = moodBackgroundColors[humor] || Colors.background;
+    const currentBackgroundColor =
+        moodBackgroundColors[humor] || Colors.background;
 
     return (
-        <View style={[styles.fullScreenContainer, { backgroundColor: currentBackgroundColor }]}>
-            <StatusBar barStyle="dark-content" backgroundColor={currentBackgroundColor} />
+        <View
+            style={[
+                styles.fullScreenContainer,
+                { backgroundColor: currentBackgroundColor },
+            ]}
+        >
+            <StatusBar
+                barStyle="light-content"
+                backgroundColor={Colors.darkBlue}
+            />
 
             <ScrollView contentContainerStyle={styles.scrollContent}>
+                {/* HERO SECTION ATUALIZADA */}
                 <View style={styles.heroSection}>
-                    <Text style={styles.heroGreeting}>Olá, Pedro!</Text>
-                    <Text style={styles.heroQuestion}>Como você está se sentindo hoje?</Text>
-                    <Text style={styles.heroEmoji}>{selectedHumor?.emoji}</Text>
+                    <Text style={styles.heroGreeting}>Olá, Pedro 👋</Text>
+                    <Text style={styles.heroQuestion}>
+                        Como você está se sentindo hoje?
+                    </Text>
+
+                    <View style={styles.heroMoodBadge}>
+                        <Text style={styles.heroMoodEmoji}>
+                            {selectedHumor?.emoji}
+                        </Text>
+                        <Text style={styles.heroMoodText}>
+                            {selectedHumor?.label.replace(/^[^ ]+ /, "")}
+                        </Text>
+                    </View>
                 </View>
 
-                <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.moodSelectorScroll}>
+                {/* EMOJI SELECTOR */}
+                <ScrollView
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    style={styles.moodSelectorScroll}
+                >
                     {humorOptions.map((op) => (
                         <TouchableOpacity
                             key={op.value}
                             style={[
                                 styles.moodOptionButton,
-                                humor === op.value && styles.moodOptionSelected,
+                                humor === op.value &&
+                                styles.moodOptionSelected,
                             ]}
                             onPress={() => setHumor(op.value)}
                             activeOpacity={0.7}
                         >
-                            <Text style={styles.moodOptionEmoji}>{op.emoji}</Text>
+                            <Text style={styles.moodOptionEmoji}>
+                                {op.emoji}
+                            </Text>
                         </TouchableOpacity>
                     ))}
                 </ScrollView>
 
+                {/* CARD AJUSTAR HUMOR */}
                 <View style={styles.card}>
-                    <Text style={styles.cardTitle}>Ajustar Humor</Text>
+                    <Text style={styles.cardTitleDark}>
+                        Ajustar Humor
+                    </Text>
+
                     <View style={styles.pickerContainer}>
                         <Picker
                             selectedValue={humor}
@@ -95,26 +128,55 @@ export default function HomeScreen() {
                             itemStyle={styles.pickerItem}
                         >
                             {humorOptions.map((op) => (
-                                <Picker.Item key={op.value} label={op.label} value={op.value} />
+                                <Picker.Item
+                                    key={op.value}
+                                    label={op.label}
+                                    value={op.value}
+                                />
                             ))}
                         </Picker>
                     </View>
                 </View>
 
+                {/* CARD INSIGHTS */}
                 <View style={styles.card}>
-                    <Text style={styles.cardTitle}>Insights da IA</Text>
+                    <Text style={styles.cardTitleDark}>Insights da IA</Text>
+
                     <View style={styles.insightItem}>
-                        <Feather name="search" size={18} color={Colors.primaryBlue} style={styles.insightIcon} />
-                        <Text style={styles.insightText}>Seu engajamento está <Text style={{ fontWeight: '700', color: Colors.greenInsight }}>estável</Text> hoje.</Text>
+                        <Feather
+                            name="search"
+                            size={18}
+                            color={Colors.primaryBlue}
+                            style={styles.insightIcon}
+                        />
+                        <Text style={styles.insightText}>
+                            Seu engajamento está{" "}
+                            <Text
+                                style={{
+                                    fontWeight: "700",
+                                    color: Colors.greenInsight,
+                                }}
+                            >
+                                estável
+                            </Text>{" "}
+                            hoje.
+                        </Text>
                     </View>
+
                     <View style={styles.insightItem}>
-                        <MaterialCommunityIcons name="lightbulb-outline" size={18} color={Colors.primaryBlue} style={styles.insightIcon} />
-                        <Text style={styles.insightText}>Pequenas pausas ajudam sua produtividade.</Text>
+                        <MaterialCommunityIcons
+                            name="lightbulb-outline"
+                            size={18}
+                            color={Colors.primaryBlue}
+                            style={styles.insightIcon}
+                        />
+                        <Text style={styles.insightText}>
+                            Pequenas pausas ajudam sua produtividade.
+                        </Text>
                     </View>
                 </View>
 
                 <RecomendacoesCard />
-
             </ScrollView>
         </View>
     );
@@ -129,36 +191,61 @@ const styles = StyleSheet.create({
         padding: 20,
         paddingTop: 0,
     },
+
+    /* --- HERO SECTION --- */
     heroSection: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingVertical: 30,
-        marginBottom: 20,
+        alignItems: "center",
+        justifyContent: "center",
+        paddingVertical: 40,
+        backgroundColor: Colors.darkBlue,
+        borderRadius: 18,
+        padding: 30,
+        marginBottom: 25,
     },
     heroGreeting: {
         fontSize: 28,
-        fontWeight: '800',
-        color: Colors.darkBlue,
-        marginBottom: 5,
+        fontWeight: "800",
+        color: Colors.white,
+        marginBottom: 8,
     },
     heroQuestion: {
-        fontSize: 18,
-        fontWeight: '500',
-        color: Colors.grayText,
+        fontSize: 17,
+        fontWeight: "500",
+        color: "#E2E8F0",
         marginBottom: 15,
     },
-    heroEmoji: {
-        fontSize: 60,
+    heroMoodBadge: {
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: Colors.white,
+        paddingHorizontal: 18,
+        paddingVertical: 10,
+        borderRadius: 30,
+        shadowColor: "#000",
+        shadowOpacity: 0.15,
+        shadowRadius: 6,
+        elevation: 4,
     },
+    heroMoodEmoji: {
+        fontSize: 30,
+        marginRight: 10,
+    },
+    heroMoodText: {
+        fontSize: 18,
+        fontWeight: "700",
+        color: Colors.darkBlue,
+    },
+
+    /* --- MOOD SELECTOR --- */
     moodSelectorScroll: {
         marginHorizontal: -20,
         marginBottom: 20,
     },
     moodOptionButton: {
-        paddingHorizontal: 15,
-        paddingVertical: 8,
+        paddingHorizontal: 16,
+        paddingVertical: 10,
         borderRadius: 25,
-        backgroundColor: 'rgba(255,255,255,0.4)',
+        backgroundColor: "rgba(255,255,255,0.5)",
         marginHorizontal: 5,
         borderWidth: 1,
         borderColor: Colors.borderColor,
@@ -167,13 +254,15 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.white,
         borderColor: Colors.primaryBlue,
         shadowColor: "#000",
-        shadowOpacity: 0.1,
-        shadowRadius: 5,
+        shadowOpacity: 0.12,
+        shadowRadius: 6,
         elevation: 3,
     },
     moodOptionEmoji: {
         fontSize: 24,
     },
+
+    /* --- CARDS --- */
     card: {
         backgroundColor: Colors.white,
         borderRadius: 14,
@@ -186,31 +275,33 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: Colors.borderColor,
     },
-    cardTitle: {
+    cardTitleDark: {
         fontSize: 18,
         fontWeight: "700",
         color: Colors.darkBlue,
         marginBottom: 14,
     },
+
     pickerContainer: {
         borderWidth: 1,
         borderColor: Colors.borderColor,
         borderRadius: 10,
-        overflow: 'hidden',
+        overflow: "hidden",
         backgroundColor: Colors.white,
     },
     picker: {
         height: 60,
-        width: '100%',
+        width: "100%",
         color: Colors.darkBlue,
     },
     pickerItem: {
         fontSize: 16,
         color: Colors.darkBlue,
     },
+
     insightItem: {
-        flexDirection: 'row',
-        alignItems: 'center',
+        flexDirection: "row",
+        alignItems: "center",
         marginBottom: 10,
     },
     insightIcon: {
