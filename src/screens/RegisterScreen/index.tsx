@@ -11,8 +11,10 @@ import {
     ActivityIndicator,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Picker } from "@react-native-picker/picker";
-import axios from "axios";
+
+// Importa a função do serviço
+// Certifique-se de que o caminho está correto para sua pasta services
+import { registerUser } from "../../services/apiBackend";
 
 export default function Register() {
     const navigation = useNavigation<any>();
@@ -20,39 +22,83 @@ export default function Register() {
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
-    const [setor, setSetor] = useState("");
+    const [cpf, setCpf] = useState("");
+    const [phone, setPhone] = useState("");
+    const [birthDate, setBirthDate] = useState("");
+
     const [loading, setLoading] = useState(false);
 
+
+    const FIXED_ROLE_ID = 1;
+    const FIXED_JOB_ID = 1;
+
+    const handleDateChange = (text: string) => {
+        let cleaned = text.replace(/\D/g, "");
+        if (cleaned.length > 2) {
+            cleaned = cleaned.substring(0, 2) + "/" + cleaned.substring(2);
+        }
+        if (cleaned.length > 5) {
+            cleaned = cleaned.substring(0, 5) + "/" + cleaned.substring(5, 9);
+        }
+        if (cleaned.length > 10) {
+            cleaned = cleaned.substring(0, 10);
+        }
+        setBirthDate(cleaned);
+    };
+
     const handleRegister = async () => {
-        if (!nome || !email || !senha || !setor) {
-            Alert.alert("Atenção", "Preencha todos os campos antes de cadastrar!");
+        // Validação
+        if (!nome || !email || !senha || !cpf || !birthDate) {
+            Alert.alert("Atenção", "Preencha todos os campos obrigatórios!");
+            return;
+        }
+
+        if (birthDate.length !== 10) {
+            Alert.alert("Data Inválida", "Preencha a data completa: DD/MM/AAAA");
             return;
         }
 
         setLoading(true);
 
         try {
-            // Substitua pela URL da sua API
-            const response = await axios.post("http://SEU_BACKEND/api/usuario", {
-                nome,
-                email,
-                senha,
-                setor,
-            });
+            const cpfLimpo = cpf.replace(/\D/g, "");
+            const phoneLimpo = phone.replace(/\D/g, ""); // "21987654321"
 
-            if (response.status === 201 || response.status === 200) {
-                Alert.alert("Sucesso", "Cadastro realizado com sucesso!", [
-                    { text: "OK", onPress: () => navigation.navigate("login") },
-                ]);
-            } else {
-                Alert.alert("Erro", "Não foi possível realizar o cadastro.");
-            }
+            const [dia, mes, ano] = birthDate.split('/');
+            const dataISO = `${ano}-${mes}-${dia}`;
+
+            const payload = {
+                roleId: FIXED_ROLE_ID,
+                name: nome,
+                email: email,
+                password: senha,
+                cpf: cpfLimpo,
+                phone: phoneLimpo,
+                birthDate: dataISO,
+                currentJobId: FIXED_JOB_ID
+            };
+
+            console.log("Enviando Payload:", JSON.stringify(payload, null, 2));
+
+            await registerUser(payload);
+
+            Alert.alert("Sucesso", "Cadastro realizado! Faça login.", [
+                { text: "OK", onPress: () => navigation.navigate("Login") },
+            ]);
+
         } catch (error: any) {
-            console.log(error.response || error.message || error);
-            Alert.alert(
-                "Erro",
-                error.response?.data?.message || "Erro ao conectar com a API"
-            );
+            console.error("Erro API:", error);
+
+            let msg = "Falha ao cadastrar.";
+            if (error.response?.data) {
+                msg = typeof error.response.data === 'string'
+                    ? error.response.data
+                    : (error.response.data.message || JSON.stringify(error.response.data));
+            } else if (error.message) {
+                msg = error.message;
+            }
+
+            Alert.alert("Erro", msg);
         } finally {
             setLoading(false);
         }
@@ -83,7 +129,38 @@ export default function Register() {
                 value={email}
                 onChangeText={setEmail}
                 keyboardType="email-address"
+                autoCapitalize="none"
             />
+
+            <TextInput
+                placeholder="CPF (apenas números)"
+                style={styles.input}
+                placeholderTextColor="#999"
+                value={cpf}
+                onChangeText={setCpf}
+                keyboardType="numeric"
+                maxLength={14}
+            />
+
+            <View style={styles.row}>
+                <TextInput
+                    placeholder="DD/MM/AAAA"
+                    style={[styles.input, styles.halfInput]}
+                    placeholderTextColor="#999"
+                    value={birthDate}
+                    onChangeText={handleDateChange}
+                    keyboardType="numeric"
+                    maxLength={10}
+                />
+                <TextInput
+                    placeholder="Telefone"
+                    style={[styles.input, styles.halfInput]}
+                    placeholderTextColor="#999"
+                    value={phone}
+                    onChangeText={setPhone}
+                    keyboardType="phone-pad"
+                />
+            </View>
 
             <TextInput
                 placeholder="Senha"
@@ -93,26 +170,6 @@ export default function Register() {
                 value={senha}
                 onChangeText={setSenha}
             />
-
-            <Text style={styles.label}>Setor</Text>
-            <View style={styles.pickerContainer}>
-                <Picker
-                    selectedValue={setor}
-                    onValueChange={(itemValue) => setSetor(itemValue)}
-                >
-                    <Picker.Item
-                        label="Selecione um setor..."
-                        value=""
-                        enabled={false}
-                        color="#999"
-                    />
-                    <Picker.Item label="RH" value="rh" />
-                    <Picker.Item label="Financeiro" value="financeiro" />
-                    <Picker.Item label="Operações" value="operacoes" />
-                    <Picker.Item label="TI" value="ti" />
-                </Picker>
-
-            </View>
 
             <TouchableOpacity
                 style={[styles.button, loading && styles.buttonDisabled]}
@@ -145,15 +202,15 @@ const styles = StyleSheet.create({
         paddingVertical: 40,
     },
     logo: {
-        width: 160,
-        height: 160,
+        width: 140,
+        height: 140,
         marginBottom: 10,
     },
     title: {
         fontSize: 26,
         fontWeight: "700",
         color: "#1A73E8",
-        marginBottom: 25,
+        marginBottom: 20,
     },
     input: {
         width: "100%",
@@ -164,20 +221,14 @@ const styles = StyleSheet.create({
         marginBottom: 14,
         color: "#333",
     },
-    label: {
-        width: "100%",
-        fontSize: 14,
-        color: "#1A73E8",
-        marginBottom: 4,
-        fontWeight: "600",
+    row: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+        gap: 10
     },
-    pickerContainer: {
-        width: "100%",
-        borderWidth: 1,
-        borderColor: "#1A73E8",
-        borderRadius: 10,
-        marginBottom: 14,
-        backgroundColor: "#fff",
+    halfInput: {
+        width: '48%',
     },
     button: {
         width: "100%",
