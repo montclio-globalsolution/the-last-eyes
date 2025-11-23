@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
     View,
     Text,
@@ -8,11 +8,16 @@ import {
     Alert,
     Image,
     StyleSheet,
+    KeyboardAvoidingView,
+    Platform
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
+import { useAuth } from "../../contexts/AuthContext";
+
 export default function Login() {
     const navigation = useNavigation<any>();
+    const { signIn } = useAuth();
 
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
@@ -27,23 +32,37 @@ export default function Login() {
         setLoading(true);
 
         try {
-            // Placeholder: simula login
-            setTimeout(() => {
-                setLoading(false);
-                // Navega direto para o Drawer principal
-                navigation.reset({
-                    index: 0,
-                    routes: [{ name: "AppDrawer" }], // <-- Atualizado
-                });
-            }, 1200);
-        } catch (error) {
+            await signIn({ email, password: senha });
+
+            navigation.reset({
+                index: 0,
+                routes: [{ name: "AppDrawer" }],
+            });
+
+        } catch (error: any) {
+            console.error("Erro Login:", error);
+
+            let msg = "Não foi possível fazer login.";
+
+            if (error.response?.data?.message) {
+                msg = error.response.data.message;
+            } else if (error.message) {
+                if (error.message.includes("401") || error.message.includes("403")) {
+                    msg = "E-mail ou senha incorretos.";
+                }
+            }
+
+            Alert.alert("Erro de Acesso", msg);
+        } finally {
             setLoading(false);
-            Alert.alert("Erro", "Não foi possível fazer login.");
         }
     }
 
     return (
-        <View style={styles.container}>
+        <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            style={styles.container}
+        >
             <Image
                 source={require("../../../assets/logo.png")}
                 style={styles.logo}
@@ -54,20 +73,21 @@ export default function Login() {
 
             <TextInput
                 style={styles.input}
-                placeholder="E-mail"
+                placeholder="E-mail (Login)"
                 placeholderTextColor="#888"
                 keyboardType="email-address"
-                onChangeText={setEmail}
+                autoCapitalize="none"
                 value={email}
+                onChangeText={setEmail}
             />
 
             <TextInput
                 style={styles.input}
                 placeholder="Senha"
                 placeholderTextColor="#888"
-                secureTextEntry
-                onChangeText={setSenha}
+                secureTextEntry={true}
                 value={senha}
+                onChangeText={setSenha}
             />
 
             <TouchableOpacity
@@ -87,7 +107,7 @@ export default function Login() {
                     Não tem conta? <Text style={styles.linkBold}>Cadastre-se</Text>
                 </Text>
             </TouchableOpacity>
-        </View>
+        </KeyboardAvoidingView>
     );
 }
 
@@ -120,6 +140,7 @@ const styles = StyleSheet.create({
         marginBottom: 16,
         borderWidth: 1,
         borderColor: "#D9D9D9",
+        color: "#333"
     },
     button: {
         width: "100%",
