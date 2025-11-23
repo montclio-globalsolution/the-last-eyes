@@ -67,10 +67,7 @@ export default function HomeScreen() {
                 { backgroundColor: currentBackgroundColor },
             ]}
         >
-            <StatusBar
-                barStyle="light-content"
-                backgroundColor={Colors.darkBlue}
-            />
+            <StatusBar barStyle="dark-content" />
 
             <ScrollView contentContainerStyle={styles.scrollContent}>
                 <View style={styles.heroSection}>
@@ -132,7 +129,7 @@ export default function HomeScreen() {
                 </View>
 
                 <View style={styles.card}>
-                    <Text style={styles.cardTitleDark}>Insights da IA</Text>
+                    <Text style={styles.cardTitle}>Insights da IA</Text>
 
                     <AIInput mood={humor} context="home-screen" />
 
@@ -161,8 +158,7 @@ const styles = StyleSheet.create({
     heroSection: {
         alignItems: "center",
         justifyContent: "center",
-        paddingVertical: 40,
-        backgroundColor: Colors.darkBlue,
+        paddingVertical: 35,
         borderRadius: 18,
         padding: 30,
         marginBottom: 25,
