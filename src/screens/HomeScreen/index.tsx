@@ -1,4 +1,3 @@
-// --- INÍCIO DO CÓDIGO ATUALIZADO ---
 import React, { useState, useMemo } from "react";
 import {
     View,
@@ -12,10 +11,11 @@ import { Picker } from "@react-native-picker/picker";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 
 import RecomendacoesCard from "../../components/Cards";
+import AIInput from "../../components/InputAI";
 
 const Colors = {
     primaryBlue: "#3B82F6",
-    darkBlue: "#102A43",      // Azul mais profundo e elegante
+    darkBlue: "#102A43",
     lightBlue: "#DBEAFE",
     white: "#FFFFFF",
     grayText: "#6B7280",
@@ -52,9 +52,10 @@ export default function HomeScreen() {
         { label: "😰 Ansioso", value: "ansioso", emoji: "😰" },
     ];
 
-    const selectedHumor = useMemo(() => {
-        return humorOptions.find((h) => h.value === humor);
-    }, [humor]);
+    const selectedHumor = useMemo(
+        () => humorOptions.find((h) => h.value === humor),
+        [humor]
+    );
 
     const currentBackgroundColor =
         moodBackgroundColors[humor] || Colors.background;
@@ -72,7 +73,6 @@ export default function HomeScreen() {
             />
 
             <ScrollView contentContainerStyle={styles.scrollContent}>
-                {/* HERO SECTION ATUALIZADA */}
                 <View style={styles.heroSection}>
                     <Text style={styles.heroGreeting}>Olá, Pedro 👋</Text>
                     <Text style={styles.heroQuestion}>
@@ -89,7 +89,6 @@ export default function HomeScreen() {
                     </View>
                 </View>
 
-                {/* EMOJI SELECTOR */}
                 <ScrollView
                     horizontal
                     showsHorizontalScrollIndicator={false}
@@ -100,24 +99,18 @@ export default function HomeScreen() {
                             key={op.value}
                             style={[
                                 styles.moodOptionButton,
-                                humor === op.value &&
-                                styles.moodOptionSelected,
+                                humor === op.value && styles.moodOptionSelected,
                             ]}
                             onPress={() => setHumor(op.value)}
                             activeOpacity={0.7}
                         >
-                            <Text style={styles.moodOptionEmoji}>
-                                {op.emoji}
-                            </Text>
+                            <Text style={styles.moodOptionEmoji}>{op.emoji}</Text>
                         </TouchableOpacity>
                     ))}
                 </ScrollView>
 
-                {/* CARD AJUSTAR HUMOR */}
                 <View style={styles.card}>
-                    <Text style={styles.cardTitleDark}>
-                        Ajustar Humor
-                    </Text>
+                    <Text style={styles.cardTitleDark}>Ajustar Humor</Text>
 
                     <View style={styles.pickerContainer}>
                         <Picker
@@ -138,30 +131,10 @@ export default function HomeScreen() {
                     </View>
                 </View>
 
-                {/* CARD INSIGHTS */}
                 <View style={styles.card}>
                     <Text style={styles.cardTitleDark}>Insights da IA</Text>
 
-                    <View style={styles.insightItem}>
-                        <Feather
-                            name="search"
-                            size={18}
-                            color={Colors.primaryBlue}
-                            style={styles.insightIcon}
-                        />
-                        <Text style={styles.insightText}>
-                            Seu engajamento está{" "}
-                            <Text
-                                style={{
-                                    fontWeight: "700",
-                                    color: Colors.greenInsight,
-                                }}
-                            >
-                                estável
-                            </Text>{" "}
-                            hoje.
-                        </Text>
-                    </View>
+                    <AIInput mood={humor} context="home-screen" />
 
                     <View style={styles.insightItem}>
                         <MaterialCommunityIcons
@@ -177,22 +150,14 @@ export default function HomeScreen() {
                 </View>
 
                 <RecomendacoesCard />
-            </ScrollView>
-        </View>
+            </ScrollView >
+        </View >
     );
 }
 
 const styles = StyleSheet.create({
-    fullScreenContainer: {
-        flex: 1,
-    },
-    scrollContent: {
-        flexGrow: 1,
-        padding: 20,
-        paddingTop: 0,
-    },
-
-    /* --- HERO SECTION --- */
+    fullScreenContainer: { flex: 1 },
+    scrollContent: { flexGrow: 1, padding: 20, paddingTop: 0 },
     heroSection: {
         alignItems: "center",
         justifyContent: "center",
@@ -202,18 +167,8 @@ const styles = StyleSheet.create({
         padding: 30,
         marginBottom: 25,
     },
-    heroGreeting: {
-        fontSize: 28,
-        fontWeight: "800",
-        color: Colors.white,
-        marginBottom: 8,
-    },
-    heroQuestion: {
-        fontSize: 17,
-        fontWeight: "500",
-        color: "#E2E8F0",
-        marginBottom: 15,
-    },
+    heroGreeting: { fontSize: 28, fontWeight: "800", color: Colors.white, marginBottom: 8 },
+    heroQuestion: { fontSize: 17, fontWeight: "500", color: "#E2E8F0", marginBottom: 15 },
     heroMoodBadge: {
         flexDirection: "row",
         alignItems: "center",
@@ -226,21 +181,9 @@ const styles = StyleSheet.create({
         shadowRadius: 6,
         elevation: 4,
     },
-    heroMoodEmoji: {
-        fontSize: 30,
-        marginRight: 10,
-    },
-    heroMoodText: {
-        fontSize: 18,
-        fontWeight: "700",
-        color: Colors.darkBlue,
-    },
-
-    /* --- MOOD SELECTOR --- */
-    moodSelectorScroll: {
-        marginHorizontal: -20,
-        marginBottom: 20,
-    },
+    heroMoodEmoji: { fontSize: 30, marginRight: 10 },
+    heroMoodText: { fontSize: 18, fontWeight: "700", color: Colors.darkBlue },
+    moodSelectorScroll: { marginHorizontal: -20, marginBottom: 20 },
     moodOptionButton: {
         paddingHorizontal: 16,
         paddingVertical: 10,
@@ -258,11 +201,7 @@ const styles = StyleSheet.create({
         shadowRadius: 6,
         elevation: 3,
     },
-    moodOptionEmoji: {
-        fontSize: 24,
-    },
-
-    /* --- CARDS --- */
+    moodOptionEmoji: { fontSize: 24 },
     card: {
         backgroundColor: Colors.white,
         borderRadius: 14,
@@ -275,42 +214,11 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: Colors.borderColor,
     },
-    cardTitleDark: {
-        fontSize: 18,
-        fontWeight: "700",
-        color: Colors.darkBlue,
-        marginBottom: 14,
-    },
-
-    pickerContainer: {
-        borderWidth: 1,
-        borderColor: Colors.borderColor,
-        borderRadius: 10,
-        overflow: "hidden",
-        backgroundColor: Colors.white,
-    },
-    picker: {
-        height: 60,
-        width: "100%",
-        color: Colors.darkBlue,
-    },
-    pickerItem: {
-        fontSize: 16,
-        color: Colors.darkBlue,
-    },
-
-    insightItem: {
-        flexDirection: "row",
-        alignItems: "center",
-        marginBottom: 10,
-    },
-    insightIcon: {
-        marginRight: 10,
-    },
-    insightText: {
-        fontSize: 15,
-        color: Colors.grayText,
-        flex: 1,
-        lineHeight: 22,
-    },
+    cardTitleDark: { fontSize: 18, fontWeight: "700", color: Colors.darkBlue, marginBottom: 14 },
+    pickerContainer: { borderWidth: 1, borderColor: Colors.borderColor, borderRadius: 10, overflow: "hidden", backgroundColor: Colors.white },
+    picker: { height: 60, width: "100%", color: Colors.darkBlue },
+    pickerItem: { fontSize: 16, color: Colors.darkBlue },
+    insightItem: { flexDirection: "row", alignItems: "center", marginTop: 12 },
+    insightIcon: { marginRight: 10 },
+    insightText: { fontSize: 15, color: Colors.grayText, flex: 1, lineHeight: 22 },
 });
