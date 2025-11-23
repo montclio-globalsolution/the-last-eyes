@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
         marginBottom: 25,
     },
     heroGreeting: { fontSize: 28, fontWeight: "800", color: Colors.white, marginBottom: 8 },
-    heroQuestion: { fontSize: 17, fontWeight: "500", color: "#E2E8F0", marginBottom: 15 },
+    heroQuestion: { fontSize: 17, fontWeight: "500", color: "#0c639cff", marginBottom: 15 },
     heroMoodBadge: {
         flexDirection: "row",
         alignItems: "center",
