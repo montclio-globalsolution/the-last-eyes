@@ -14,6 +14,9 @@ The Last Eyes é um aplicativo voltado para a saúde mental de colaboradores, of
 ```bash
 https://youtu.be/kZQ1M0xGLrU
 ```
+###  Link do deploy das API
+- Deploy IoT: https://the-last-eyes-api.onrender.com/docs#
+- Deploy Java: https://the-last-eyes-api-3v3p.onrender.com/swagger-ui/index.html#
 
 ## Contexto do Projeto
 
@@ -53,6 +56,7 @@ Nossa solução busca promover a colaboração entre colaboradores e IA, preveni
 > ⚠️ Importante: o app **não substitui profissionais de saúde mental**, mas atua como **ferramenta complementar de suporte e prevenção**
 
 ## Estrutura do Projeto
+```bash
 /
 ├── assets                          # Imagens incluídas no sistema
 ├── src/                            # Código fonte da aplicação
@@ -85,6 +89,7 @@ Nossa solução busca promover a colaboração entre colaboradores e IA, preveni
 ├── package.json                    # Manifesto do projeto (scripts e libs instaladas)
 ├── readme.md                       # Documentação do projeto (Instruções, Integrantes)
 └── tsconfig.json                   # Configurações do TypeScript
+```
 
 ## 🧩 Dependências
 
