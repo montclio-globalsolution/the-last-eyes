@@ -1,6 +1,6 @@
 # Descrição da solução
 
-O aplicativo é voltado para a saúde mental de colaboradores, oferecendo suporte diário para bem-estar emocional. Ele é integrado com inteligência artificial, que fornece conselhos personalizados e dicas práticas com base no humor do usuário. Além disso, o app conta com uma página de livros, indicando leituras clássicas que podem inspirar e relaxar, e uma página de hobbies, sugerindo novas atividades para estimular o aprendizado e o lazer.
+The Last Eyes é um aplicativo voltado para a saúde mental de colaboradores, oferecendo suporte diário para bem-estar emocional. Ele é integrado com inteligência artificial, que fornece conselhos personalizados e dicas práticas com base no humor do usuário. Além disso, o app conta com uma página de livros, indicando leituras clássicas que podem inspirar e relaxar, e uma página de hobbies, sugerindo novas atividades para estimular o aprendizado e o lazer.
 
 ## Integrantes
 
@@ -12,7 +12,7 @@ O aplicativo é voltado para a saúde mental de colaboradores, oferecendo suport
 
 ### Link do PITCH
 ```bash
-Inserir o link aqui futuramente 
+https://youtu.be/kZQ1M0xGLrU
 ```
 
 ## Contexto do Projeto
@@ -156,5 +156,6 @@ npx expo start
 💻 Ou selecione um emulador Android/iOS no menu web do Expo.
 
 ### QRcode para instalar o APP em seu dispositivo móvel
-QRCODE AQUi
+<img width="356" height="435" alt="image" src="https://github.com/user-attachments/assets/09d0304e-98e2-465f-91cc-f1050a5f76d1" />
 
+© 2025 MontClio. Todos os direitos reservados.
