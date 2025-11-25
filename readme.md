@@ -12,7 +12,7 @@ The Last Eyes é um aplicativo voltado para a saúde mental de colaboradores, of
 
 ### Link do PITCH
 ```bash
-https://youtu.be/McTqF5ZQRqA
+https://youtu.be/5qq9vV_-OCQ
 ```
 ###  Link do deploy das API
 - Deploy IoT: https://the-last-eyes-api.onrender.com/docs#
